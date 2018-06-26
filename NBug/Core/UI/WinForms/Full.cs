@@ -34,9 +34,15 @@ namespace NBug.Core.UI.WinForms
 
 			// ToDo: Displaying report contents properly requires some more work.
 			this.mainTabs.TabPages.Remove(this.mainTabs.TabPages["reportContentsTabPage"]);
+            this.Closing += Full_Closing;
 		}
 
-		internal UIDialogResult ShowDialog(SerializableException exception, Report report)
+        private void Full_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            this.uiDialogResult = new UIDialogResult(ExecutionFlow.BreakExecution, SendReport.Send);
+        }
+
+        internal UIDialogResult ShowDialog(SerializableException exception, Report report)
 		{
 			this.Text = string.Format("{0} {1}", report.GeneralInfo.HostApplication, Settings.Resources.UI_Dialog_Full_Title);
 
@@ -87,7 +93,6 @@ namespace NBug.Core.UI.WinForms
 
 		private void SendAndQuitButton_Click(object sender, EventArgs e)
 		{
-			this.uiDialogResult = new UIDialogResult(ExecutionFlow.BreakExecution, SendReport.Send);
 			this.Close();
 		}
 	}
