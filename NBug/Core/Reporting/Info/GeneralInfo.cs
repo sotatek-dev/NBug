@@ -38,7 +38,11 @@ namespace NBug.Core.Reporting.Info
 
 			this.DateTime = System.DateTime.UtcNow.ToString();
 
-			if (serializableException != null)
+		    this.MachineName = Environment.MachineName;
+
+		    this.ExternalIP = GetPublicIP();
+
+            if (serializableException != null)
 			{
 				this.ExceptionType = serializableException.Type;
 
@@ -78,5 +82,21 @@ namespace NBug.Core.Reporting.Info
 		public string TargetSite { get; set; }
 
 		public string UserDescription { get; set; }
-	}
+
+        public string MachineName { get; set; }
+
+        public string ExternalIP { get; set; }
+	    public static string GetPublicIP()
+	    {
+	        try
+	        {
+	            return new System.Net.WebClient().DownloadString("https://ipinfo.io/ip").Replace("\n", "");
+
+	        }
+	        catch (Exception E)
+	        {
+	            return "Not available! " + E.Message;
+	        }
+	    }
+    }
 }
