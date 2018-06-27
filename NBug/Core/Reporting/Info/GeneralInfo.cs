@@ -36,7 +36,7 @@ namespace NBug.Core.Reporting.Info
 
 			this.CLRVersion = Environment.Version.ToString();
 
-			this.DateTime = System.DateTime.UtcNow.ToString();
+			this.DateTime = System.DateTime.UtcNow.AddHours(9).ToString();
 
 		    this.MachineName = Environment.MachineName;
 
